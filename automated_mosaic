@@ -1,0 +1,92 @@
+##user inputs AA sequences, prepend and append sequences
+##degenerate and codon usage table should be in same directory
+
+import pandas as pd
+from itertools import product
+import random
+
+### user input
+seqA = "ENSMLTDPGNVQKAVCHPTAWDLGKG" #human b2(example)
+seqB = "ANSMLTEPADGRKVVCHPTAWDLGHG" #mouse b2 (example)
+roiA = (0, 60)
+roiB = (0, 60)
+labelA, labelB = "H", "M" #letters chosen based on species, h = human, m = mouse
+codon_usage_csv = "yeast_codonusage.csv"
+degen_table_csv = "yeast_degenerate_table.csv"  # 
+prepend_seq = "acatgacccagggtttctgg"
+append_seq  = "gatttcaggattaagatgtgtacaaaagtaac"
+prefix = "h_m_B2_ACE2"
+random.seed(13)
+
+### aa pairs + degenerate table
+degen_df = pd.read_csv(degen_table_csv, sep=None, engine='python')
+degen_map = {}
+for _, r in degen_df.iterrows():
+    a1, a2, codon = str(r[0]).strip("*").strip().upper(), str(r[1]).strip("*").strip().upper(), str(r[2]).strip().upper()
+    if not a1 or not a2: continue
+    degen_map[frozenset({a1, a2})] = codon
+
+### codon usage
+codon_df = pd.read_csv(codon_usage_csv)
+aa2codons = {}
+for _, r in codon_df.iterrows():
+    aa = str(r["amino_acid"]).strip().upper()
+    codon = str(r["codon"]).strip().upper()
+    aa2codons.setdefault(aa, []).append(codon)
+
+### site classification
+roiA_seq = seqA[roiA[0]:roiA[1]]
+roiB_seq = seqB[roiB[0]:roiB[1]]
+
+kinds, degen_codons, site_report = [], [], []
+for i, (a, b) in enumerate(zip(roiA_seq, roiB_seq), start=1):  # 1-based position reporting
+    if a == b:
+        kinds.append('same'); degen_codons.append(''); site_report.append((i, a, b, "same", ""))
+    else:
+        k = frozenset({a, b})
+        dc = degen_map.get(k, "")
+        if dc:
+            kinds.append('degenerate'); degen_codons.append(dc)
+            site_report.append((i, a, b, "degenerate", dc))
+        else:
+            kinds.append('hardcoded'); degen_codons.append('')
+            site_report.append((i, a, b, "hardcoded", ""))
+
+### codon summary printed (identifies variable positions and if degenerate or hardcoded)
+print("pos\taa_a\taa_b\tcodon_type\tdegenerate")
+for pos, aaA, aaB, kind, dc in site_report:
+    if kind != "same":
+        print(f"{pos}\t{aaA}\t{aaB}\t{kind}\t{dc}")
+
+### combinations of hardcoded amino acids
+hard_idx = [i for i,k in enumerate(kinds) if k == 'hardcoded']
+choices = [(roiA_seq[i], roiB_seq[i]) for i in hard_idx]
+variants = []
+if not choices:
+    variants.append( ("base_1a_aa", roiA_seq) )
+else:
+    for picks in product(*choices):
+        aa_list, label = list(roiA_seq), []
+        for (j, aa_choice) in zip(hard_idx, picks):
+            aa_list[j] = aa_choice
+            label.append(labelA if aa_choice == roiA_seq[j] else labelB)
+        variants.append( (''.join(label) + "_1a_aa", ''.join(aa_list)) )
+
+pd.DataFrame([{'sequence name': n, 'amino acid sequence': s} for n,s in variants]).to_csv(f"{prefix}_aa_variants.csv", index=False)
+
+###aa to nt
+def pick_codon(aa):
+    return random.choice(aa2codons[aa])
+
+nt_rows = []
+for name, aa in variants:
+    nts = []
+    for i, aa_char in enumerate(aa):
+        if kinds[i] == 'degenerate' and degen_codons[i]:
+            nts.append(degen_codons[i])
+        else:
+            nts.append(pick_codon(aa_char))
+    full_seq = prepend_seq + ''.join(nts) + append_seq
+    nt_rows.append({'variant': name.replace('_aa','_nt'), 'sequence': full_seq})
+
+pd.DataFrame(nt_rows).to_csv(f"{prefix}_nt_variants.csv", index=False)
