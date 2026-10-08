@@ -1,0 +1,37 @@
+name	read_count	cell 
+m1-0_S35_R1_001.fastq.gz_frequency.txt	"1,859,938"	
+m1-1-7_S9_R1_001.fastq.gz_frequency.txt	"1,931,091"	97056
+m1-1-9_S25_R1_001.fastq.gz_frequency.txt	"1,944,314"	4052
+m1-2-7_S10_R1_001.fastq.gz_frequency.txt	"6,909,028"	383998
+m1-2-9_S26_R1_001.fastq.gz_frequency.txt	"290,119"	122994
+m1-3-7_S11_R1_001.fastq.gz_frequency.txt	"2,395,236"	116046
+m1-3-9_S27_R1_001.fastq.gz_frequency.txt	"3,313,422"	140565
+m1-4-7_S12_R1_001.fastq.gz_frequency.txt	"1,858,864"	475787
+m1-4-9_S28_R1_001.fastq.gz_frequency.txt	"2,398,425"	781294
+m2-0_S36_R1_001.fastq.gz_frequency.txt	"1,836,162"	
+m2-1-7_S13_R1_001.fastq.gz_frequency.txt	"2,357,106"	109505
+m2-1-9_S29_R1_001.fastq.gz_frequency.txt	"2,272,863"	4251
+m2-2-7_S14_R1_001.fastq.gz_frequency.txt	"2,357,106"	376958
+m2-2-9_S30_R1_001.fastq.gz_frequency.txt	"2,229,538"	129024
+m2-3-7_S15_R1_001.fastq.gz_frequency.txt	"1,412,383"	116153
+m2-3-9_S31_R1_001.fastq.gz_frequency.txt	"2,440,904"	149308
+m2-4-7_S16_R1_001.fastq.gz_frequency.txt	"2,022,824"	486265
+m2-4-9_S32_R1_001.fastq.gz_frequency.txt	"1,177,895"	767632
+w1-0_S33_R1_001.fastq.gz_frequency.txt	"2,100,654"	
+w1-1-7_S1_R1_001.fastq.gz_frequency.txt	"10,337,327"	16280
+w1-1-9_S17_R1_001.fastq.gz_frequency.txt	"171,609"	294
+w1-2-7_S2_R1_001.fastq.gz_frequency.txt	"2,752,628"	270652
+w1-2-9_S18_R1_001.fastq.gz_frequency.txt	"677,349"	23029
+w1-3-7_S3_R1_001.fastq.gz_frequency.txt	"805,595"	122118
+w1-3-9_S19_R1_001.fastq.gz_frequency.txt	"2,013,482"	54920
+w1-4-7_S4_R1_001.fastq.gz_frequency.txt	"2,487,486"	656242
+w1-4-9_S20_R1_001.fastq.gz_frequency.txt	"2,214,398"	942611
+w2-0_S34_R1_001.fastq.gz_frequency.txt	"2,892,702"	
+w2-1-7_S5_R1_001.fastq.gz_frequency.txt	"2,838,982"	14734
+w2-1-9_S21_R1_001.fastq.gz_frequency.txt	"1,519,607"	433
+w2-2-7_S6_R1_001.fastq.gz_frequency.txt	"1,958,119"	247612
+w2-2-9_S22_R1_001.fastq.gz_frequency.txt	"2,225,260"	26215
+w2-3-7_S7_R1_001.fastq.gz_frequency.txt	"2,195,408"	116962
+w2-3-9_S23_R1_001.fastq.gz_frequency.txt	"3,214,136"	57798
+w2-4-7_S8_R1_001.fastq.gz_frequency.txt	"1,614,710"	675799
+w2-4-9_S24_R1_001.fastq.gz_frequency.txt	"3,002,403"	983152
